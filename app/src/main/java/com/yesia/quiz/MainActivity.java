@@ -101,13 +101,11 @@ public class MainActivity extends AppCompatActivity {
         rbPilihanC.setText(jawaban_kuis[2]);
         rbPilihanD.setText(jawaban_kuis[3]);
 
-
-
+        playSound(nomor);
         //reset nilai ketika mengulang soal
         rgPilihan.check(0);
         benar = 0;
         salah = 0;
-        playVoiceSatu();
     }
 
 

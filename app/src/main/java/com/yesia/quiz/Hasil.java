@@ -1,6 +1,7 @@
 package com.yesia.quiz;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
@@ -12,12 +13,15 @@ import butterknife.OnClick;
 
 public class Hasil extends AppCompatActivity {
 
+    public static MediaPlayer mediaPlayer;
+
     @BindView(R.id.tv_hasil)
     TextView tvHasil;
     @BindView(R.id.tv_nilai)
     TextView tvNilai;
     @BindView(R.id.btn_ulangi)
     Button btnUlangi;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
