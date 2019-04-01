@@ -1,5 +1,6 @@
 package com.yesia.quiz;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -11,8 +12,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,13 +73,19 @@ public class MainActivity extends AppCompatActivity {
             "ITZY adalah jebolan agensi JYP",
     };
     int[] suaraSoal = new int[]{
-
             R.raw.listening_part_one_q_satu,
             R.raw.listening_part_one_q_dua,
             R.raw.listening_part_one_q_tiga,
             R.raw.listening_part_one_q_empat,
             R.raw.listening_part_one_q_lima
     };
+
+    int[] suaraSoalsatu = new int[]{
+
+            R.raw.listening_part_one_q_satu
+
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,10 +104,30 @@ public class MainActivity extends AppCompatActivity {
         rgPilihan.check(0);
         benar = 0;
         salah = 0;
-
-
+        playVoiceSatu();
     }
 
+
+    private void playVoiceSatu() {
+        try {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
+            {
+                mediaPlayer.reset();
+                mediaPlayer.release();
+                mediaPlayer = null;
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Masuk Exception", Toast.LENGTH_SHORT).show();
+        }
+
+
+        mediaPlayer = MediaPlayer.create(this, suaraSoal[0]);
+
+        mediaPlayer.setLooping(false);
+        mediaPlayer.start();
+    }
 
     private void playSound(int arg) {
 
@@ -128,11 +153,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("SetTextI18n")
     public void next() {
 
-
+        playSound(nomor);
         if (rbPilihanA.isChecked() || rbPilihanB.isChecked() || rbPilihanC.isChecked() || rbPilihanD.isChecked()) {
-
             RadioButton jawabanUser = (RadioButton) findViewById(rgPilihan.getCheckedRadioButtonId());
             String ambilJawabanUser = jawabanUser.getText().toString();
 
@@ -141,10 +166,13 @@ public class MainActivity extends AppCompatActivity {
 
             if (ambilJawabanUser.equalsIgnoreCase(jawaban_benar[nomor])) {
                 benar++;
-                tvPenjelasan.setText("BENAR\n karena : \n"+penjelasan_jawaban[nomor]);
+//                tvPenjelasan.setText("BENAR\n karena : \n" + penjelasan_jawaban[nomor]);
             } else {
                 salah++;
-                tvPenjelasan.setText("SALAH\n jawaban benar adalah : \n"+jawaban_benar[nomor]+"\nkarena\t"+penjelasan_jawaban[nomor]);
+//                tvPenjelasan.setText("SALAH\n jawaban benar adalah : \n"
+//                        + jawaban_benar[nomor]
+//                        + "\nkarena\t"
+//                        + penjelasan_jawaban[nomor]);
             }
 
             nomor++;
@@ -169,14 +197,44 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.btn_next})
+    @OnClick({R.id.rb_pilihan_a, R.id.rb_pilihan_b, R.id.rb_pilihan_c, R.id.rb_pilihan_d, R.id.rg_pilihan, R.id.btn_next})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+
+            case R.id.rb_pilihan_a:
+                penjelasan();
+                break;
+            case R.id.rb_pilihan_b:
+                penjelasan();
+                break;
+            case R.id.rb_pilihan_c:
+                penjelasan();
+                break;
+            case R.id.rb_pilihan_d:
+                penjelasan();
+                break;
+            case R.id.rg_pilihan:
+                break;
             case R.id.btn_next:
                 next();
-
                 break;
+        }
 
+    }
+
+    private void penjelasan() {
+        RadioButton jawabanUser = (RadioButton) findViewById(rgPilihan.getCheckedRadioButtonId());
+        String ambilJawabanUser = jawabanUser.getText().toString();
+
+        if (ambilJawabanUser.equalsIgnoreCase(jawaban_benar[nomor])) {
+            tvPenjelasan.setText("BENAR\n karena : \n" + penjelasan_jawaban[nomor]);
+        } else {
+            tvPenjelasan.setText("SALAH\n jawaban benar adalah : \n"
+                    + jawaban_benar[nomor]
+                    + "\nkarena\t"
+                    + penjelasan_jawaban[nomor]);
         }
     }
+
+
 }
