@@ -221,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
                 next();
                 playSound(nomor);
                PilihanJawabanShow();
+               tvPenjelasan.setText("");
                 break;
             case R.id.btn_hasil:
                 next();
