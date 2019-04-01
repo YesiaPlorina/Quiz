@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     RadioGroup rgPilihan;
     @BindView(R.id.btn_next)
     Button btnNext;
+    @BindView(R.id.btn_hasil)
+    Button btnHasil;
     @BindView(R.id.tv_penjelasan)
     TextView tvPenjelasan;
 
@@ -100,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         rbPilihanD.setText(jawaban_kuis[3]);
 
 
+
         //reset nilai ketika mengulang soal
         rgPilihan.check(0);
         benar = 0;
@@ -123,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        mediaPlayer = MediaPlayer.create(this, suaraSoal[0]);
+        mediaPlayer = MediaPlayer.create(this, suaraSoalsatu[0]);
 
         mediaPlayer.setLooping(false);
         mediaPlayer.start();
@@ -156,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public void next() {
 
-        playSound(nomor);
+
         if (rbPilihanA.isChecked() || rbPilihanB.isChecked() || rbPilihanC.isChecked() || rbPilihanD.isChecked()) {
             RadioButton jawabanUser = (RadioButton) findViewById(rgPilihan.getCheckedRadioButtonId());
             String ambilJawabanUser = jawabanUser.getText().toString();
@@ -166,13 +169,8 @@ public class MainActivity extends AppCompatActivity {
 
             if (ambilJawabanUser.equalsIgnoreCase(jawaban_benar[nomor])) {
                 benar++;
-//                tvPenjelasan.setText("BENAR\n karena : \n" + penjelasan_jawaban[nomor]);
             } else {
                 salah++;
-//                tvPenjelasan.setText("SALAH\n jawaban benar adalah : \n"
-//                        + jawaban_benar[nomor]
-//                        + "\nkarena\t"
-//                        + penjelasan_jawaban[nomor]);
             }
 
             nomor++;
@@ -197,29 +195,73 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.rb_pilihan_a, R.id.rb_pilihan_b, R.id.rb_pilihan_c, R.id.rb_pilihan_d, R.id.rg_pilihan, R.id.btn_next})
+    @OnClick({R.id.rb_pilihan_a, R.id.rb_pilihan_b, R.id.rb_pilihan_c, R.id.rb_pilihan_d, R.id.rg_pilihan, R.id.btn_next, R.id.btn_hasil})
     public void onViewClicked(View view) {
         switch (view.getId()) {
 
             case R.id.rb_pilihan_a:
                 penjelasan();
+                hideA();
                 break;
             case R.id.rb_pilihan_b:
                 penjelasan();
+                hideB();
                 break;
             case R.id.rb_pilihan_c:
                 penjelasan();
+                hideC();
                 break;
             case R.id.rb_pilihan_d:
                 penjelasan();
+                hideD();
                 break;
             case R.id.rg_pilihan:
                 break;
             case R.id.btn_next:
                 next();
+                playSound(nomor);
+               PilihanJawabanShow();
+                break;
+            case R.id.btn_hasil:
+                next();
                 break;
         }
 
+    }
+
+    private void PilihanJawabanShow() {
+        rbPilihanA.setEnabled(true);
+        rbPilihanB.setEnabled(true);
+        rbPilihanC.setEnabled(true);
+        rbPilihanD.setEnabled(true);
+    }
+
+    private void hideD() {
+        rbPilihanA.setEnabled(false);
+        rbPilihanB.setEnabled(false);
+        rbPilihanC.setEnabled(false);
+        rbPilihanD.setEnabled(true);
+    }
+
+    private void hideC() {
+        rbPilihanA.setEnabled(false);
+        rbPilihanB.setEnabled(false);
+        rbPilihanC.setEnabled(true);
+        rbPilihanD.setEnabled(false);
+    }
+
+    private void hideB() {
+        rbPilihanA.setEnabled(false);
+        rbPilihanB.setEnabled(true);
+        rbPilihanC.setEnabled(false);
+        rbPilihanD.setEnabled(false);
+    }
+
+    private void hideA() {
+        rbPilihanA.setEnabled(true);
+        rbPilihanB.setEnabled(false);
+        rbPilihanC.setEnabled(false);
+        rbPilihanD.setEnabled(false);
     }
 
     private void penjelasan() {
