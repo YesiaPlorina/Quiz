@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                     mediaPlayer = null;
                 }
             } catch (Exception e) {
-                Toast.makeText(this, "Masuk Exception", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Voice Soal di Mulai", Toast.LENGTH_SHORT).show();
             }
 
 
@@ -191,10 +191,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.rg_pilihan:
                 break;
             case R.id.btn_next:
-
                 next();
                 PilihanJawabanShow();
-                tvPenjelasan.setText("Penjelasan");
+                tvPenjelasan.setText("");
                 playSound(nomor);
                 break;
 
