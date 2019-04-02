@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
     RadioGroup rgPilihan;
     @BindView(R.id.btn_next)
     Button btnNext;
-    @BindView(R.id.btn_hasil)
-    Button btnHasil;
     @BindView(R.id.tv_penjelasan)
     TextView tvPenjelasan;
 
@@ -82,11 +80,7 @@ public class MainActivity extends AppCompatActivity {
             R.raw.listening_part_one_q_lima
     };
 
-    int[] suaraSoalsatu = new int[]{
 
-            R.raw.listening_part_one_q_satu
-
-    };
 
 
     @Override
@@ -109,49 +103,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void playVoiceSatu() {
-        try {
-            if (mediaPlayer.isPlaying()) {
-                mediaPlayer.stop();
-            }
-            {
-                mediaPlayer.reset();
-                mediaPlayer.release();
-                mediaPlayer = null;
-            }
-        } catch (Exception e) {
-            Toast.makeText(this, "Masuk Exception", Toast.LENGTH_SHORT).show();
-        }
-
-
-        mediaPlayer = MediaPlayer.create(this, suaraSoalsatu[0]);
-
-        mediaPlayer.setLooping(false);
-        mediaPlayer.start();
-    }
-
     private void playSound(int arg) {
-
-        try {
-            if (mediaPlayer.isPlaying()) {
-                mediaPlayer.stop();
-            }
-            {
-                mediaPlayer.reset();
-                mediaPlayer.release();
-                mediaPlayer = null;
-            }
-        } catch (Exception e) {
-            Toast.makeText(this, "Masuk Exception", Toast.LENGTH_SHORT).show();
-        }
-
-
         if (nomor < pertanyaan_kuis.length) {
-            mediaPlayer = MediaPlayer.create(this, suaraSoal[nomor]);
-        }
-        mediaPlayer.setLooping(false);
-        mediaPlayer.start();
+            try {
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.stop();
+                }
+                {
+                    mediaPlayer.reset();
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                }
+            } catch (Exception e) {
+                Toast.makeText(this, "Masuk Exception", Toast.LENGTH_SHORT).show();
+            }
 
+
+            if (nomor < pertanyaan_kuis.length) {
+                mediaPlayer = MediaPlayer.create(this, suaraSoal[nomor]);
+            }
+            mediaPlayer.setLooping(false);
+            mediaPlayer.start();
+        } else {
+            mediaPlayer.stop();
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -193,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.rb_pilihan_a, R.id.rb_pilihan_b, R.id.rb_pilihan_c, R.id.rb_pilihan_d, R.id.rg_pilihan, R.id.btn_next, R.id.btn_hasil})
+    @OnClick({R.id.rb_pilihan_a, R.id.rb_pilihan_b, R.id.rb_pilihan_c, R.id.rb_pilihan_d, R.id.rg_pilihan, R.id.btn_next})
     public void onViewClicked(View view) {
         switch (view.getId()) {
 
@@ -216,14 +191,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.rg_pilihan:
                 break;
             case R.id.btn_next:
+
                 next();
+                PilihanJawabanShow();
+                tvPenjelasan.setText("Penjelasan");
                 playSound(nomor);
-               PilihanJawabanShow();
-               tvPenjelasan.setText("Penjelasan");
                 break;
-            case R.id.btn_hasil:
-                next();
-                break;
+
         }
 
     }

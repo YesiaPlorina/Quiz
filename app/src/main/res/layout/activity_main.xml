@@ -81,13 +81,6 @@
                 android:layout_weight="1"
                 android:text="Next" />
 
-            <Button
-                android:id="@+id/btn_hasil"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:text="Hasil" />
         </LinearLayout>
         <TextView
             android:id="@+id/tv_penjelasan"
