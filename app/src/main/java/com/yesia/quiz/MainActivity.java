@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
             "Ya molla, siapa yang tau coba",
             "ITZY adalah jebolan agensi JYP",
     };
+
     int[] suaraSoal = new int[]{
             R.raw.listening_part_one_q_satu,
             R.raw.listening_part_one_q_dua,
@@ -79,8 +80,6 @@ public class MainActivity extends AppCompatActivity {
             R.raw.listening_part_one_q_empat,
             R.raw.listening_part_one_q_lima
     };
-
-
 
 
     @Override
@@ -118,12 +117,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Voice Soal di Mulai", Toast.LENGTH_SHORT).show();
             }
 
-
-            if (nomor < pertanyaan_kuis.length) {
-                mediaPlayer = MediaPlayer.create(this, suaraSoal[nomor]);
-            }
+            mediaPlayer = MediaPlayer.create(this, suaraSoal[nomor]);
             mediaPlayer.setLooping(false);
             mediaPlayer.start();
+
         } else {
             mediaPlayer.stop();
         }
@@ -131,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void next() {
-
 
         if (rbPilihanA.isChecked() || rbPilihanB.isChecked() || rbPilihanC.isChecked() || rbPilihanD.isChecked()) {
             RadioButton jawabanUser = (RadioButton) findViewById(rgPilihan.getCheckedRadioButtonId());
@@ -145,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 salah++;
             }
-
             nomor++;
             if (nomor < pertanyaan_kuis.length) {
                 tvSoal.setText(pertanyaan_kuis[nomor]);
